@@ -92,6 +92,7 @@ function render(){
  $("answers").innerHTML=q.a.map((a,i)=>`<button class="answer" type="button"><span>${String.fromCharCode(65+i)}</span>${a}</button>`).join("");
  $("clue").textContent="CLUE: "+q.clue;$("clue").classList.remove("show");
  $("points").textContent="40 pts";$("clueBtn").textContent="☼ Reveal Clue";
+ $("clueBtn").disabled=false;
  $("progress").style.width=(current/questions.length*100)+"%";
  $("answers").querySelectorAll("button").forEach((b,i)=>b.addEventListener("click",()=>checkAnswer(i)));
  $("awardButtons").innerHTML=Object.keys(scores).map(t=>`<button class="award" type="button" data-team="${t}">${t}</button>`).join("");
@@ -105,23 +106,23 @@ function checkAnswer(i){
  $("clue").classList.add("show");
  $("clue").textContent=(i===q.correct?"✓ Correct! ":"✕ Not quite. ")+q.why;
  $("clueBtn").disabled=true;
- if(i===q.correct){$("points").textContent=(clueUsed?"30":"40")+" pts available";$("clue").style.borderColor="var(--green)";}
+ if(i===q.correct){$("points").textContent=(clueUsed?"20":"40")+" pts available";$("clue").style.borderColor="var(--green)";}
  else {$("points").textContent="0 pts";$("clue").style.borderColor="var(--red)";}
 }
 function award(team){
- const q=questions[current], correctText=q.a[q.correct];
+ const q=questions[current];
  const chosen=$("answers").querySelectorAll(".answer");
  if(!chosen.length)return;
  const isCorrect=chosen[q.correct].disabled && chosen[q.correct].style.borderColor.includes("green");
  if(!isCorrect){alert("Reveal/check the answer first. Points can only be awarded after a correct answer.");return;}
- const pts=clueUsed?30:40;scores[team]+=pts;
+ const pts=clueUsed?20:40;scores[team]+=pts;
  history.unshift({q:current+1,team,pts,question:q.q});
  renderScores();renderHistory();current++;render();
 }
 function renderHistory(){
  $("history").innerHTML=history.length?history.map(h=>`<div class="history-item">Q${h.q}: Team ${h.team} earned <b>${h.pts} pts</b><small>${h.question}</small></div>`).join(""):'<div class="history-item">No questions completed yet.<small>Your game activity will appear here.</small></div>';
 }
-$("clueBtn").addEventListener("click",()=>{if(clueUsed)return;clueUsed=true;$("clue").classList.add("show");$("clue").textContent="CLUE: "+questions[current].clue;$("points").textContent="30 pts";$("clueBtn").textContent="Clue Revealed";$("clueBtn").disabled=true;});
+$("clueBtn").addEventListener("click",()=>{if(clueUsed)return;clueUsed=true;$("clue").classList.add("show");$("clue").textContent="CLUE: "+questions[current].clue;$("points").textContent="20 pts";$("clueBtn").textContent="Clue Revealed";$("clueBtn").disabled=true;});
 $("skipBtn").addEventListener("click",()=>{history.unshift({q:current+1,team:"—",pts:0,question:questions[current].q+" (Skipped)"});renderHistory();current++;render();});
 function finish(){
  $("progress").style.width="100%";
