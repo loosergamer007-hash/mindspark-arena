@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10172b">
+<title>MindSpark | STEM Quiz Arena</title>
+<style>
+:root{--bg:#0b1020;--panel:#141d34;--panel2:#1b2743;--line:#2a395b;--text:#f4f7ff;--muted:#9eacc9;--cyan:#55d6e8;--gold:#ffc96b;--green:#62d6a2;--red:#ff7b86}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#1a3150 0%,transparent 38%),radial-gradient(ellipse at 90% 20%,#30254d 0%,transparent 32%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button{font:inherit;cursor:pointer}.wrap{max-width:1120px;margin:auto;padding:26px 20px 48px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),#8c82ff);color:#091326;font-size:25px;font-weight:900;box-shadow:0 8px 28px #55d6e833}.brand h1{font-size:clamp(21px,4vw,29px);margin:0;letter-spacing:-.8px}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.top-actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#18233c;color:var(--text);border-radius:11px;padding:10px 14px;font-weight:700;font-size:13px;transition:.2s}.btn:hover{transform:translateY(-1px);border-color:var(--cyan)}.btn.primary{background:var(--cyan);color:#071323;border-color:var(--cyan)}.btn.danger{color:#ffabb2}
+.hero{border:1px solid var(--line);border-radius:22px;padding:24px;background:linear-gradient(120deg,#182845dd,#171c35ee);display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:18px}.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:2px;font-size:11px;text-transform:uppercase}.hero h2{font-size:clamp(24px,4vw,36px);margin:7px 0}.hero p{color:var(--muted);margin:0;line-height:1.5}.round-chip{border:1px solid #42577f;background:#213252;border-radius:14px;padding:13px 16px;min-width:120px;text-align:center}.round-chip strong{display:block;font-size:27px;color:var(--gold)}.round-chip span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.teams{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px}.team{border:1px solid var(--line);border-radius:15px;background:#121b30;padding:13px;text-align:center}.team small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}.team b{display:block;font-size:25px;margin-top:4px}.team.active{border-color:var(--cyan);box-shadow:0 0 0 1px #55d6e855}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}.quiz-card,.side-card{border:1px solid var(--line);border-radius:21px;background:#121b30ed;overflow:hidden;box-shadow:0 18px 60px #0003}.quiz-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.q-count{font-size:12px;color:var(--muted);font-weight:700}.category{font-size:11px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;padding:7px 10px;border-radius:9px;background:#243656;color:var(--cyan)}.question-area{padding:28px 25px 24px}.progress{height:5px;background:#25324d;border-radius:9px;margin-bottom:22px;overflow:hidden}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),#9c8cff);width:0;transition:.3s}.question-area h3{font-size:clamp(21px,3vw,29px);line-height:1.35;margin:0 0 24px;min-height:78px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}.answer{background:#1a2742;border:1px solid #304263;border-radius:13px;padding:14px;text-align:left;color:var(--text);min-height:58px;font-weight:650}.answer:hover{border-color:var(--cyan);background:#213454}.answer span{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#304361;color:var(--cyan);margin-right:9px;font-size:12px}
+.clue{display:none;margin-top:16px;padding:13px 15px;border:1px dashed #6b648e;border-radius:12px;color:#d7d2ff;background:#292442;font-size:14px;line-height:1.5}.clue.show{display:block}.question-foot{border-top:1px solid var(--line);padding:17px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.points{font-size:13px;color:var(--muted)}.points strong{color:var(--gold);font-size:18px}.foot-actions{display:flex;gap:8px;flex-wrap:wrap}
+.side-card{padding:18px}.side-card h3{margin:0 0 13px;font-size:15px}.side-card p{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 14px}.award-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.award{padding:12px 0;border-radius:10px;border:1px solid #3b4d70;background:#202e4b;color:white;font-weight:900}.award:hover{background:var(--cyan);color:#071323;border-color:var(--cyan)}.side-divider{height:1px;background:var(--line);margin:18px 0}.history-list{max-height:260px;overflow:auto;display:flex;flex-direction:column;gap:8px}.history-item{background:#1a2742;border-radius:10px;padding:10px;font-size:12px;color:#dbe4fa;line-height:1.4}.history-item small{display:block;color:var(--muted);margin-top:4px}
+.notice{color:var(--muted);font-size:11px;text-align:center;margin-top:22px}.modal{position:fixed;inset:0;background:#050916d9;display:none;place-items:center;padding:20px;z-index:5}.modal.open{display:grid}.modal-box{max-width:470px;width:100%;background:#17223b;border:1px solid var(--line);border-radius:20px;padding:25px;text-align:center}.modal-box h2{margin:0 0 10px}.modal-box p{color:var(--muted);line-height:1.5}.modal-box .btn{margin:5px}
+@media(max-width:820px){.main{grid-template-columns:1fr}.side-card{order:2}.hero{align-items:flex-start}.round-chip{min-width:95px}.teams{gap:6px}.team{padding:10px 5px}.team b{font-size:21px}}
+@media(max-width:520px){.wrap{padding:17px 12px 30px}header{align-items:flex-start;flex-direction:column}.top-actions{width:100%}.top-actions .btn{flex:1}.hero{padding:18px}.round-chip{display:none}.teams{grid-template-columns:repeat(5,minmax(0,1fr))}.team small{font-size:8px}.team b{font-size:18px}.question-area{padding:22px 16px}.answers{grid-template-columns:1fr}.question-area h3{min-height:0}.quiz-head,.question-foot{padding:15px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><div class="logo">✦</div><div><h1>MindSpark <span style="color:var(--cyan)">Arena</span></h1><p>Think • Solve • Conquer</p></div></div>
+  <div class="top-actions"><button class="btn" id="historyTop">▤ View History</button><button class="btn danger" id="resetTop">↻ New Game</button></div>
+</header>
+<section class="hero">
+  <div><div class="eyebrow">Inter-school style team challenge</div><h2>Ready to spark your brain?</h2><p>IQ, Mathematics, Physics and Chemistry — one question at a time.<br>Choose an answer, reveal a clue, then award points to a team.</p></div>
+  <div class="round-chip"><strong id="totalCount">20</strong><span>Questions</span></div>
+</section>
+<section class="teams" id="teamScores"></section>
+<div class="main">
+  <section class="quiz-card">
+    <div class="quiz-head"><span class="q-count" id="qCount">QUESTION 1 / 20</span><span class="category" id="category">IQ</span></div>
+    <div class="question-area">
+      <div class="progress"><span id="progress"></span></div>
+      <h3 id="question">Loading question…</h3>
+      <div class="answers" id="answers"></div>
+      <div class="clue" id="clue"></div>
+    </div>
+    <div class="question-foot">
+      <div class="points">Potential: <strong id="points">40 pts</strong></div>
+      <div class="foot-actions"><button class="btn" id="clueBtn">☼ Reveal Clue</button><button class="btn" id="skipBtn">← Skip (No Points)</button></div>
+    </div>
+  </section>
+  <aside class="side-card">
+    <h3>🏆 Award points to</h3>
+    <p>After a team answers correctly, tap its button to award the points for this question.</p>
+    <div class="award-grid" id="awardButtons"></div>
+    <div class="side-divider"></div>
+    <h3>📜 Game History</h3>
+    <div class="history-list" id="history"><div class="history-item">No questions completed yet.<small>Your game activity will appear here.</small></div></div>
+  </aside>
+</div>
+<div class="notice">MindSpark Arena • 20 questions • Intermediate + Class 10 level • Made for team play</div>
+</div>
+<div class="modal" id="modal"><div class="modal-box"><h2 id="modalTitle">Game complete!</h2><p id="modalText"></p><button class="btn primary" id="playAgain">Play Again</button><button class="btn" id="closeModal">Close</button></div></div>
+<script>
+const questions = [
+{cat:"IQ",q:"Find the next number in the sequence: 2, 6, 12, 20, 30, ___",a:["36","40","42","44"],correct:2,clue:"Look at the differences between consecutive numbers. They increase by 2 each time.",why:"The differences are 4, 6, 8, 10, so the next difference is 12. Therefore 30 + 12 = 42."},
+{cat:"MATHS",q:"A number is increased by 20% and then decreased by 20%. What is the overall change?",a:["No change","4% decrease","4% increase","2% decrease"],correct:1,clue:"Try starting with 100 and apply both percentage changes one after the other.",why:"100 becomes 120, then 20% of 120 (24) is subtracted: 120 − 24 = 96. That is a 4% decrease."},
+{cat:"PHYSICS",q:"A car travels 150 metres in 10 seconds. What is its average speed?",a:["10 m/s","12 m/s","15 m/s","20 m/s"],correct:2,clue:"Average speed is total distance divided by total time.",why:"Speed = 150 ÷ 10 = 15 m/s."},
+{cat:"CHEMISTRY",q:"Which of these solutions has the lowest pH value?",a:["Lemon juice","Pure water","Baking soda solution","Soap solution"],correct:0,clue:"A lower pH means a solution is more acidic.",why:"Lemon juice is acidic and typically has a pH around 2, lower than the other options."},
+{cat:"IQ",q:"If BOOK is coded as CPPL by shifting every letter one step forward, how is MATH coded?",a:["NBUH","NBUI","LZSG","NBSI"],correct:1,clue:"Move each letter of MATH one place forward in the alphabet.",why:"M→N, A→B, T→U and H→I, giving NBUI."},
+{cat:"MATHS",q:"The roots of x² − 7x + 12 = 0 are:",a:["2 and 6","3 and 4","−3 and −4","1 and 12"],correct:1,clue:"Find two numbers whose product is 12 and whose sum is 7.",why:"x² − 7x + 12 = (x − 3)(x − 4), so the roots are 3 and 4."},
+{cat:"PHYSICS",q:"A 5 kg object accelerates at 3 m/s². What net force acts on it?",a:["8 N","15 N","20 N","30 N"],correct:1,clue:"Use Newton’s second law, relating force, mass and acceleration.",why:"F = ma = 5 × 3 = 15 N."},
+{cat:"CHEMISTRY",q:"What is the chemical formula of washing soda?",a:["NaHCO₃","Na₂CO₃·10H₂O","CaCO₃","NaOH"],correct:1,clue:"It is hydrated sodium carbonate.",why:"Washing soda is sodium carbonate decahydrate: Na₂CO₃·10H₂O."},
+{cat:"IQ",q:"A clock shows 3:15. What is the smaller angle between its hour and minute hands?",a:["0°","7.5°","15°","22.5°"],correct:1,clue:"At 3:15, the minute hand is at 90°. The hour hand has moved a quarter of the way from 3 to 4.",why:"The hour hand is at 97.5° and the minute hand at 90°, so the angle is 7.5°."},
+{cat:"MATHS",q:"The circumference of a circle is 44 cm. Using π = 22/7, what is its radius?",a:["3.5 cm","7 cm","14 cm","21 cm"],correct:1,clue:"Use circumference = 2πr and rearrange to find r.",why:"44 = 2 × 22/7 × r, so r = 7 cm."},
+{cat:"PHYSICS",q:"Which lens is used to correct myopia (short-sightedness)?",a:["Convex lens","Concave lens","Cylindrical lens","Bifocal lens"],correct:1,clue:"The corrective lens must diverge incoming light before it enters the eye.",why:"A concave (diverging) lens moves the image back onto the retina for a myopic eye."},
+{cat:"CHEMISTRY",q:"When zinc reacts with dilute hydrochloric acid, which gas is released?",a:["Oxygen","Chlorine","Hydrogen","Carbon dioxide"],correct:2,clue:"This is a metal + acid reaction. The gas can be tested with a burning splint.",why:"Zn + 2HCl → ZnCl₂ + H₂. Hydrogen gas is released."},
+{cat:"IQ",q:"Ravi is taller than Aman. Aman is taller than Kiran. Who is the shortest?",a:["Ravi","Aman","Kiran","Cannot be determined"],correct:2,clue:"Arrange the three people from tallest to shortest using both comparisons.",why:"Ravi > Aman > Kiran, so Kiran is the shortest."},
+{cat:"MATHS",q:"A fair die is rolled once. What is the probability of getting a prime number?",a:["1/3","1/2","2/3","5/6"],correct:1,clue:"List the prime numbers among the six possible outcomes: 1, 2, 3, 4, 5, 6.",why:"The prime outcomes are 2, 3 and 5: 3 out of 6, which is 1/2."},
+{cat:"PHYSICS",q:"An electric appliance operates at 220 V and draws a current of 2 A. What is its power?",a:["110 W","220 W","440 W","880 W"],correct:2,clue:"Electric power is the product of potential difference and current.",why:"P = VI = 220 × 2 = 440 W."},
+{cat:"CHEMISTRY",q:"Which type of bond is formed when two atoms share pairs of electrons?",a:["Ionic bond","Covalent bond","Metallic bond","Hydrogen bond"],correct:1,clue:"Think of the bonding commonly found between non-metal atoms.",why:"A covalent bond forms when atoms share one or more pairs of electrons."},
+{cat:"IQ",q:"A farmer has 17 sheep. All but 9 run away. How many sheep remain?",a:["8","9","17","None"],correct:1,clue:"Read the phrase 'all but 9' carefully. It tells you how many did not run away.",why:"All except 9 ran away, so 9 sheep remain."},
+{cat:"MATHS",q:"If the mean of 5, 7, 9, 11 and x is 9, what is x?",a:["11","12","13","14"],correct:2,clue:"A mean of 9 for five numbers means their total is 5 × 9.",why:"The required total is 45. The known numbers total 32, so x = 45 − 32 = 13."},
+{cat:"PHYSICS",q:"A ray of light travels from air into glass. Which change occurs?",a:["It bends away from the normal","It bends towards the normal","Its frequency increases","It stops moving"],correct:1,clue:"Glass is optically denser than air, so light slows down on entering it.",why:"Light entering a denser medium slows and refracts towards the normal."},
+{cat:"CHEMISTRY",q:"An element has atomic number 17. How many electrons does a neutral atom of it have in its outermost shell?",a:["1","5","7","8"],correct:2,clue:"Atomic number 17 is chlorine. Write its shell arrangement.",why:"Chlorine has electron arrangement 2, 8, 7, so it has 7 valence electrons."}
+];
+let current=0, clueUsed=false, scores={A:0,B:0,C:0,D:0,E:0}, history=[];
+const $=id=>document.getElementById(id);
+function renderScores(){ $("teamScores").innerHTML=Object.entries(scores).map(([t,s])=>`<div class="team"><small>Team ${t}</small><b>${s}</b></div>`).join("");}
+function render(){
+ if(current>=questions.length){finish();return;}
+ const q=questions[current];clueUsed=false;
+ $("qCount").textContent=`QUESTION ${current+1} / ${questions.length}`;
+ $("category").textContent=q.cat;$("question").textContent=q.q;
+ $("answers").innerHTML=q.a.map((a,i)=>`<button class="answer" type="button"><span>${String.fromCharCode(65+i)}</span>${a}</button>`).join("");
+ $("clue").textContent="CLUE: "+q.clue;$("clue").classList.remove("show");
+ $("points").textContent="40 pts";$("clueBtn").textContent="☼ Reveal Clue";
+ $("progress").style.width=(current/questions.length*100)+"%";
+ $("answers").querySelectorAll("button").forEach((b,i)=>b.addEventListener("click",()=>checkAnswer(i)));
+ $("awardButtons").innerHTML=Object.keys(scores).map(t=>`<button class="award" type="button" data-team="${t}">${t}</button>`).join("");
+ $("awardButtons").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>award(b.dataset.team)));
+}
+function checkAnswer(i){
+ const q=questions[current];
+ const buttons=$("answers").querySelectorAll(".answer");
+ buttons.forEach((b,j)=>{b.disabled=true;b.style.opacity=j===q.correct?"1":".55";b.style.borderColor=j===q.correct?"var(--green)":"#304263";});
+ buttons[i].style.borderColor=i===q.correct?"var(--green)":"var(--red)";
+ $("clue").classList.add("show");
+ $("clue").textContent=(i===q.correct?"✓ Correct! ":"✕ Not quite. ")+q.why;
+ $("clueBtn").disabled=true;
+ if(i===q.correct){$("points").textContent=(clueUsed?"30":"40")+" pts available";$("clue").style.borderColor="var(--green)";}
+ else {$("points").textContent="0 pts";$("clue").style.borderColor="var(--red)";}
+}
+function award(team){
+ const q=questions[current], correctText=q.a[q.correct];
+ const chosen=$("answers").querySelectorAll(".answer");
+ if(!chosen.length)return;
+ const isCorrect=chosen[q.correct].disabled && chosen[q.correct].style.borderColor.includes("green");
+ if(!isCorrect){alert("Reveal/check the answer first. Points can only be awarded after a correct answer.");return;}
+ const pts=clueUsed?30:40;scores[team]+=pts;
+ history.unshift({q:current+1,team,pts,question:q.q});
+ renderScores();renderHistory();current++;render();
+}
+function renderHistory(){
+ $("history").innerHTML=history.length?history.map(h=>`<div class="history-item">Q${h.q}: Team ${h.team} earned <b>${h.pts} pts</b><small>${h.question}</small></div>`).join(""):'<div class="history-item">No questions completed yet.<small>Your game activity will appear here.</small></div>';
+}
+$("clueBtn").addEventListener("click",()=>{if(clueUsed)return;clueUsed=true;$("clue").classList.add("show");$("clue").textContent="CLUE: "+questions[current].clue;$("points").textContent="30 pts";$("clueBtn").textContent="Clue Revealed";$("clueBtn").disabled=true;});
+$("skipBtn").addEventListener("click",()=>{history.unshift({q:current+1,team:"—",pts:0,question:questions[current].q+" (Skipped)"});renderHistory();current++;render();});
+function finish(){
+ $("progress").style.width="100%";
+ const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+ $("modalTitle").textContent="Quiz completed!";
+ $("modalText").textContent="Final scores — "+sorted.map(([t,s])=>`Team ${t}: ${s} points`).join(" • ")+(sorted[0][1]===sorted[1][1]?"":" . Winner: Team "+sorted[0][0]+"!");
+ $("modal").classList.add("open");
+}
+function reset(){if(!confirm("Start a new game? All scores and history will be cleared."))return;current=0;clueUsed=false;history=[];scores={A:0,B:0,C:0,D:0,E:0};renderScores();renderHistory();$("modal").classList.remove("open");render();}
+$("resetTop").addEventListener("click",reset);$("historyTop").addEventListener("click",()=>{$("history").scrollIntoView({behavior:"smooth",block:"center"});});
+$("playAgain").addEventListener("click",()=>{scores={A:0,B:0,C:0,D:0,E:0};current=0;history=[];renderScores();renderHistory();$("modal").classList.remove("open");render();});
+$("closeModal").addEventListener("click",()=>$("modal").classList.remove("open"));
+renderScores();render();
+</script>
+</body>
+</html>
